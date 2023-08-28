@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [[ -f /flag.sh ]]; then
+    source /flag.sh
+fi
+
+set -e
+
+chmod 755 /usr/local/apache2/cgi-bin/*
+
+# Apache gets grumpy about PID files pre-existing
+rm -f /usr/local/apache2/logs/httpd.pid
+
+echo "Running..."
+exec httpd -DFOREGROUND "$@"
